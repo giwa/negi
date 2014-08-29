@@ -10,14 +10,6 @@ SqliteSaver::SqliteSaver(){
 
 
 void SqliteSaver::Proc(Stream * stream){
-<<<<<<< HEAD
-=======
-	string src_ip_str, dst_ip_str;
-	src_ip_str = inet_ntoa(stream->GetSrcIP());
-	dst_ip_str = inet_ntoa(stream->GetDstIP());
-
-	//add
->>>>>>> 1c45144f1cbd208d86d7215cb7177ef2804a514c
 	struct timeval tmp_time = stream->GetTimestamp();
 	struct tm *tmp = localtime(&tmp_time.tv_sec);
 	ostringstream oss;
@@ -39,11 +31,7 @@ void SqliteSaver::Proc(Stream * stream){
 	<<"match_str, stream, stream_org, "
 	<<"after_ipfilter, after_prefilter, prefilter_log"
 	<<") values ('"
-<<<<<<< HEAD
 	<< stream->GetStreamId() << "','2.2','"<<stream->GetSrcIpSrc()<<"','"<<stream->GetDstIpSrc()<<"','"<<stream->GetSrcPort()<<"','"<<stream->GetDstPort()<<"','"<<tstamp<<"','"
-=======
-	<< stream->GetStreamId() << "','2.2','"<<src_ip_str<<"','"<<dst_ip_str<<"','"<<stream->GetSrcPort()<<"','"<<stream->GetDstPort()<<"','"<<tstamp<<"','"
->>>>>>> 1c45144f1cbd208d86d7215cb7177ef2804a514c
 	<< stream->GetDirection() <<"','"<< stream->GetTruncated() <<"','"<< stream->GetRuleIds() <<"','"
 //	<< stream->GetDirection() <<"','"<< stream->GetTruncated() <<"','""','"
 	<< stream->GetStreamSize() <<"','"<<  stream->GetOrgStreamSize() <<"','"
@@ -103,13 +91,6 @@ void SqliteSaver::Proc(Stream * stream){
 
 
 void SqliteSaver::ProcPacket(Packet * pkt){
-<<<<<<< HEAD
-=======
-	string src_ip_str, dst_ip_str;
-	src_ip_str = inet_ntoa(pkt->GetSrcIP());
-	dst_ip_str = inet_ntoa(pkt->GetDstIP());
-
->>>>>>> 1c45144f1cbd208d86d7215cb7177ef2804a514c
 	ostringstream oss;
 
 	if(pkt->GetProtocol() != IPPROTO_TCP){return;}
@@ -127,11 +108,7 @@ void SqliteSaver::ProcPacket(Packet * pkt){
 	oss.str("");
 	oss << "insert into save_packet (src_ip ,dst_ip ,src_port ,dst_port ,timestamp , \
 	protocol, packet_size, packet_size_org, content_size, flag, content) values (\
-<<<<<<< HEAD
 	,'"<< pkt->GetSrcIpStr() <<"','"<< pkt->GetDstIpStr() <<"','"<< pkt->GetSrcPort() <<"','"\
-=======
-	,'"<< src_ip_str <<"','"<<dst_ip_str <<"','"<< pkt->GetSrcPort() <<"','"\
->>>>>>> 1c45144f1cbd208d86d7215cb7177ef2804a514c
 	<<pkt->GetDstPort() <<"','"<< tstamp <<"','"<<pkt->GetProtocol()<<"','"<< pkt->GetPacketSize() <<"','"<< pkt->GetPacketSizeOrg() <<"','"\
 	<< pkt->GetContentSize();
 	string query = oss.str();
