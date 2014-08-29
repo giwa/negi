@@ -53,6 +53,7 @@ void Master::Proc(Packet *pkt){
 	static time_t now_time;
 	static unsigned int time_counter;
 
+#ifdef USE_POSTGRES
 	if(observer_packet_counter > 1000){
 		now_time = time(NULL);
 		if(now_time > prev_time){
@@ -73,6 +74,7 @@ void Master::Proc(Packet *pkt){
 		observer_packet_counter++;
 //		all_packet_counter++;
 	}
+#endif
 //	river_gate->ProcPacket(pkt);
 	
 /*
@@ -92,10 +94,12 @@ void Master::Proc(Packet *pkt){
 #ifdef USE_POSTGRES
 				pgsql_saver->Proc(*it);
 #endif
+                sqlite_saver->Proc(*it);
 			}else if(atoi(config->get("save_all").c_str())){
 #ifdef USE_POSTGRES
 				pgsql_saver->Proc(*it);
 #endif
+                sqlite_saver->Proc(*it);
 			}
 
 		}
